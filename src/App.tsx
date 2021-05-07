@@ -1,26 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import { Book } from './types/Book'
+import Catalogue from './components/catalogue/Catalogue'
+import BorrowList from './components/borrow/BorrowList'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [borrowed, setBorrowed] = useState<Book[]>([])
+
+    const liftBookBorrowed = (book: Book) => {
+        let newList = [ ...borrowed, book ]
+        setBorrowed(newList)
+    }
+    return (
+        <main>
+            <Catalogue liftBookBorrowed={liftBookBorrowed} />
+
+            <BorrowList borrowed={borrowed} />
+        </main>
+    );
 }
 
 export default App;
